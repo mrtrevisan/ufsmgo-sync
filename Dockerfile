@@ -24,5 +24,4 @@ COPY --chown=node:node . .
 RUN chmod -R 755 /app/init_container \
     && chown node:node /app
 USER node
-#CMD [ "yarn", "server" ]
 ENTRYPOINT ["/app/init_container/startup.sh"]

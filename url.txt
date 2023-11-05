@@ -1,0 +1,41 @@
+LINKS:
+CT_URL=https://www.ufsm.br/unidades-universitarias/CT/wp-json/wp/v2/eventos?per_page=100
+CCNE_URL=https://www.ufsm.br/unidades-universitarias/CCNE/wp-json/wp/v2/eventos?per_page=100
+CCSH_URL=https://www.ufsm.br/unidades-universitarias/CCSH/wp-json/wp/v2/eventos?per_page=100
+CE_URL=https://www.ufsm.br/unidades-universitarias/ce/wp-json/wp/v2/eventos?per_page=100
+CCR_URL=https://www.ufsm.br/unidades-universitarias/ccr/wp-json/wp/v2/eventos?per_page=100
+CAL_URL=https://www.ufsm.br/unidades-universitarias/cal/wp-json/wp/v2/eventos?per_page=100
+CCS_URL=https://www.ufsm.br/unidades-universitarias/ccs/wp-json/wp/v2/eventos?per_page=100
+CEFD_URL=https://www.ufsm.br/unidades-universitarias/cefd/wp-json/wp/v2/eventos?per_page=100
+CTISM_URL=https://www.ufsm.br/unidades-universitarias/ctism/wp-json/wp/v2/eventos?per_page=100
+POLI_URL=https://www.ufsm.br/unidades-universitarias/politecnico/wp-json/wp/v2/eventos?per_page=100
+IPE_URL=https://www.ufsm.br/unidades-universitarias/ipeamarelo/wp-json/wp/v2/eventos?per_page=100 
+CC_URL=https://www.ufsm.br/outros-orgaos/cc/wp-json/wp/v2/eventos?per_page=100
+
+PRAE_URL=https://www.ufsm.br/pro-reitorias/prae/wp-json/wp/v2/eventos?per_page=100 
+
+PRE_URL=https://www.ufsm.br/pro-reitorias/pre/wp-json/wp/v2/eventos?per_page=100
+(predio da reitoria nono andar)
+
+PROGREP_URL=https://www.ufsm.br/pro-reitorias/progep/wp-json/wp/v2/eventos?per_page=100
+(predio de administracao central 4 andar) ( Prédio 48B, da Unidade de Atenção à Saúde do Servidor.)
+
+PROGRAD_URL=https://www.ufsm.br/pro-reitorias/prograd/wp-json/wp/v2/eventos?per_page=100
+
+PROINO=https://www.ufsm.br/pro-reitorias/proinova/wp-json/wp/v2/eventos?per_page=100
+
+PROPLAN_URL=https://www.ufsm.br/pro-reitorias/proplan/wp-json/wp/v2/eventos?per_page=100
+(reitoria prédio 47 3 andar)
+
+PRPGP_URL=https://www.ufsm.br/pro-reitorias/prpgp/wp-json/wp/v2/eventos?per_page=100
+(reitoria prédio 47 7 andar)
+
+CC, -29.722465372810927, -53.71696534053394
+
+PRAE, -29.72052460727689, -53.71227043564285
+
+REITORIA, -29.72089184647684, -53.71473743206669 
+
+PROGRAD, -29.720834775355176, -53.71227194511495
+
+PROINOVA, -29.722724680595896, -53.711214156218645

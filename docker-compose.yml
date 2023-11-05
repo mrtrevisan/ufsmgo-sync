@@ -5,8 +5,8 @@ services:
     image: mrtrevisan/ufsmgo:latest
     container_name: ufsmgo
     restart: always
-    ports:
-      - "3000:3000"
+    stdin_open: true
+    tty: true 
     networks:
       - traefik-proxy
 
