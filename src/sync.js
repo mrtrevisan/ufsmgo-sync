@@ -75,8 +75,10 @@ function checkLocal(local){
     else if (local.match(/youtube/i))       return false
     else if (local.match(/a confirmar/i))   return false
     else if (local.match(/Argentina/i))     return false
-    else if (local.match(/cotrijal/i))     return false
-    else if (local.match(/Brasilia/i))     return false
+    else if (local.match(/cotrijal/i))      return false
+    else if (local.match(/Brasilia/i))      return false
+    else if (local.match(/Google/i))   return false
+    else if (local.match(/Itaimbé/i))   return false
     else return true
 }
 
@@ -93,46 +95,62 @@ function getCentro(local){
     if (local.match(/Colegio Tecnico Industrial/i) || local.match(/CTISM/) || local.match(/CTISM-UFSM/) ) return 'CTISM'
     if (local.match(/Colegio Politecnico/i) || local.match(/POLI/) || local.match(/POLITECNICO/) ) return 'POLI'
     if (local.match(/Ipe Amarelo/i) || local.match(/IPE/) ) return 'IPE'
+    if (local.match(/Centro de Convencoes/i) || local.match(/CC/) ) return 'CC'
     else return ' '
 }
 
 async function saveData(data){
+    if ((data == null)||(data == undefined)) {
+        console.log('Skipping center. No data to process.')
+        return;
+    }
+
     var client = await connect();
     var dataHoje = getDateHoje()
 
     data.forEach(element => {
         // convertemos as datas para o formato MM/DD/YY
+        if (element.acf.evento_inicio == null) {
+            console.log('1 record not inserted! Reason: no start date.');
+            return;
+        }
         var data_ini = convertDate(element.acf.evento_inicio)
         var local = element.acf.evento_local
         
         if (compareDate(data_ini, dataHoje) && checkLocal(local))
         {
             var data_fim = convertDate(element.acf.evento_termino) 
-            var query = "INSERT INTO evento (id, data_inicio, data_termino, local, centro, nome, link)" +
+            var query = "INSERT INTO temp (id, data_inicio, data_termino, local, centro, nome, link)" +
             "VALUES ('" + element.id + "', '" + data_ini + "', '" + data_fim + "', '" + local + "', '" 
             + getCentro(local) + "', '" + element.acf.evento_nome + "', '" + element.link + "')";
             
             client.query(query, function(err, result) {
                 if(err) {
-                    console.error('error running query', err);
+                    console.error('1 record not inserted! Error running query! Error code: ' + err.code + " | Detail:" + err.detail);
+                    
+                } else {
+                    console.log("1 record inserted");
                 }
-                console.log("1 record inserted");
             })
-            //return true;
-        } //else return false;
-    });   
+            
+        } else {
+            console.log('1 record NOT inserted! Reason: Too old or not in campus.')
+        }
+    });
     client.release(); 
+
 }
     
-function main() {
+async function main() {
     urls = [
         process.env.CT_URL, process.env.CCNE_URL, 
         process.env.CCSH_URL, process.env.CE_URL, 
         process.env.CCR_URL, process.env.CAL_URL,
         process.env.CCS_URL, process.env.CEFD_URL,
         process.env.CTISM_URL, process.env.POLI_URL,
-        process.env.IPE_URL
+        process.env.IPE_URL, process.env.CC_URL
     ];
+
     urls.forEach(url => {
         fetch(url)
           .then(response => response.json())
