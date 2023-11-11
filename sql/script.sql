@@ -13,7 +13,7 @@ CREATE TABLE evento (
 CREATE TABLE centro (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255),
-    sigla VARCHAR(5),
+    sigla VARCHAR(10),
     longitude FLOAT,
     latitude FLOAT
 );
@@ -30,5 +30,24 @@ VALUES ('Centro de Tecnologia', 'CT', -29.713190291317783, -53.71682910622894),
        ('Colégio Politécnico', 'POLI', -29.722189325079345, -53.71793839904378),
        ('Colégio Técnico Industrial de Santa Maria', 'CTISM', -29.71121379030947, -53.717138986219815),
        ('Unidade de Educação Infantil Ipê Amarelo', 'IPE', -29.711742361807893, -53.71752996467574);
+        
+        ('Centro de Convenções', 'CC', -29.722465372810927, -53.71696534053394),
+        ('Pró-Reitoria de Assuntos Estudantis', 'PRAE', -29.72052460727689, -53.71227043564285),
+        ('Reitoria', 'REITORIA', -29.72089184647684, -53.71473743206669),
+        ('Pró-Reitoria de Graduação', 'PROGRAD', -29.720834775355176, -53.71227194511495),
+        ('Pró-Reitoria de Inovação e Empreendedorismo', 'PROINOVA', -29.722724680595896, -53.711214156218645),
+        ('Biblioteca Central', 'BC', -29.71565916729169, -53.715241911176925),
+        ('Centro de Processamento de Dados', 'CPD', -29.720861910594707, -53.71383139686621),
+
+        INSERT INTO centro (nome, sigla, latitude, longitude)
+        VALUES ('Centro de Convenções', 'CC', -29.722465372810927, -53.71696534053394),
+            ('Pró-Reitoria de Assuntos Estudantis', 'PRAE', -29.72052460727689, -53.71227043564285),
+            ('Reitoria', 'REITORIA', -29.72089184647684, -53.71473743206669),
+            ('Pró-Reitoria de Graduação', 'PROGRAD', -29.720834775355176, -53.71227194511495),
+            ('Pró-Reitoria de Inovação e Empreendedorismo', 'PROINOVA', -29.722724680595896, -53.711214156218645),
+            ('Biblioteca Central', 'BC', -29.71565916729169, -53.715241911176925),
+            ('Centro de Processamento de Dados', 'CPD', -29.720861910594707, -53.71383139686621),
 */
+
+
 
