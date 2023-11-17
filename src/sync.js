@@ -1,128 +1,67 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
-const {Pool} = require('pg');
-
-async function connect(){
-    if(global.connection) return global.connection.connect()
-    else {
-        const pool = new Pool({
-            host: process.env.DATABASE_HOST,
-            user: process.env.DATABASE_USER,
-            database: process.env.DATABASE_DB,
-            password: process.env.DATABASE_PASSWORD,
-            port: process.env.DATABASE_PORT
-        });
-        global.connection = pool
-        return pool.connect()
-    }
-}    
-// retorna a string da data do dia atual no formato MM/DD/YY
-function getDateHoje(){
-    var objectDate = new Date();
-    var dia = objectDate.getDate();
-    var mes = objectDate.getMonth() +1;
-    var ano = objectDate.getFullYear();
-
-    if (dia.length < 2) {
-        dia = '0' + dia;
-    }
-    if (mes.length < 2) {
-        mes = '0' + mes;
-    }
-    var datahoje = mes + '-' + dia + '-' + ano
-
-    return datahoje
-}
-
-function convertDate(StrDate){
-    // Divide a string em partes: data e hora
-    //console.log(`splitando data ${StrDate}` )
-    var partes = StrDate.split(' ');
-
-    // Divide a parte de data em dia, mês e ano
-    var dataPartes = partes[0].split('/');
-
-    // Obtém as partes da data
-    var dia = dataPartes[0];
-    var mes = dataPartes[1];
-    var ano = dataPartes[2];
-
-    if (dia.length < 2) {
-        dia = '0' + dia;
-    }
-    if (mes.length < 2) {
-        mes = '0' + mes;
-    }
-
-    // Formata a data no formato "MM/DD/YY"
-    var dataFormatada = mes + '-' + dia + '-' + ano;
-    return dataFormatada
-}
-
-function compareDate(dataEvento, datahoje){
-    // Resultado
-    var df = new Date(dataEvento);
-    var dh = new Date(datahoje);
-    //console.log(`comparando datas: ${df} e ${dh}`)
-    if (df > dh) return true;
-    else return false;
-}
+import { connect } from "./db/db.js";
+import { getDateHoje, convertDate, compareDate } from "./util/util.js";
+import fs from 'fs';
 
 function checkLocal(local){
     local = local.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    if      (local.match(/online/i))        return false
-    else if (local.match(/youtube/i))       return false
-    else if (local.match(/a confirmar/i))   return false
-    else if (local.match(/Argentina/i))     return false
-    else if (local.match(/cotrijal/i))      return false
-    else if (local.match(/Brasilia/i))      return false
-    else if (local.match(/Google/i))   return false
-    else if (local.match(/Itaimbé/i))   return false
-    else return true
+    if      (local.match(/online/i))        return false;
+    else if (local.match(/youtube/i))       return false;
+    else if (local.match(/a confirmar/i))   return false;
+    else if (local.match(/Argentina/i))     return false;
+    else if (local.match(/cotrijal/i))      return false;
+    else if (local.match(/Brasilia/i))      return false;
+    else if (local.match(/Google/i))        return false;
+    else if (local.match(/Itaimbé/i))       return false;
+    else return true;
 }
 
+/*
 function getCentro(local){   
     local = local.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    if (local.match(/Centro de Tecnologia/i) || local.match(/CT/) || local.match(/CT-UFSM/) ) return 'CT'
-    if (local.match(/Centro de Ciencias Sociais e Humanas/i) || local.match(/CCSH/) || local.match(/CCSH-UFSM/) ) return 'CCSH'
-    if (local.match(/Centro de Ciencias Naturais e Exatas/i) || local.match(/CCNE/) || local.match(/CCNE-UFSM/) ) return 'CCNE'
-    if (local.match(/Centro de Educacao/i) || local.match(/CE/) || local.match(/CE-UFSM/) ) return 'CE'
-    if (local.match(/Centro de Ciencias Rurais/i) || local.match(/CCR/) || local.match(/CCR-UFSM/) ) return 'CCR'
-    if (local.match(/Centro de Artes e Letras/i) || local.match(/CAL/) || local.match(/CAL-UFSM/) ) return 'CE'
-    if (local.match(/Centro de Ciencias da Saude/i) || local.match(/CCS/) || local.match(/CCS-UFSM/) ) return 'CCS'
-    if (local.match(/Centro de Educaçao Fisica e Desportos/i) || local.match(/CEFD/) || local.match(/CEFD-UFSM/) ) return 'CEFD'
-    if (local.match(/Colegio Tecnico Industrial/i) || local.match(/CTISM/) || local.match(/CTISM-UFSM/) ) return 'CTISM'
-    if (local.match(/Colegio Politecnico/i) || local.match(/POLI/) || local.match(/POLITECNICO/) ) return 'POLI'
-    if (local.match(/Ipe Amarelo/i) || local.match(/IPE/) ) return 'IPE'
-    if (local.match(/Centro de Convencoes/i) || local.match(/CC/) ) return 'CC'
-    else return ' '
+    if (local.match(/Centro de Tecnologia/i)                    || local.match(/CT/)        || local.match(/CT-UFSM/) )     return 'CT';
+    if (local.match(/Centro de Ciencias Sociais e Humanas/i)    || local.match(/CCSH/)      || local.match(/CCSH-UFSM/) )   return 'CCSH';
+    if (local.match(/Centro de Ciencias Naturais e Exatas/i)    || local.match(/CCNE/)      || local.match(/CCNE-UFSM/) )   return 'CCNE';
+    if (local.match(/Centro de Educacao/i)                      || local.match(/CE/)        || local.match(/CE-UFSM/) )     return 'CE';
+    if (local.match(/Centro de Ciencias Rurais/i)               || local.match(/CCR/)       || local.match(/CCR-UFSM/) )    return 'CCR';
+    if (local.match(/Centro de Artes e Letras/i)                || local.match(/CAL/)       || local.match(/CAL-UFSM/) )    return 'CE';
+    if (local.match(/Centro de Ciencias da Saude/i)             || local.match(/CCS/)       || local.match(/CCS-UFSM/) )    return 'CCS';
+    if (local.match(/Centro de Educaçao Fisica e Desportos/i)   || local.match(/CEFD/)      || local.match(/CEFD-UFSM/) )   return 'CEFD';
+    if (local.match(/Colegio Tecnico Industrial/i)              || local.match(/CTISM/)     || local.match(/CTISM-UFSM/) )  return 'CTISM';
+    if (local.match(/Colegio Politecnico/i)                     || local.match(/POLI/)      || local.match(/POLITECNICO/) ) return 'POLI';
+    if (local.match(/Ipe Amarelo/i)                             || local.match(/IPE/) )                                     return 'IPE';
+    if (local.match(/Centro de Convencoes/i)                    || local.match(/CC/) )                                      return 'CC';
+    else return 'ufsm';
 }
+*/
 
-async function saveData(data){
-    if ((data == null)||(data == undefined)) {
-        console.log('Skipping center. No data to process.')
+async function saveData(data, centro){
+    if ( (data == null) || (data == undefined) ) {
+        console.log('Skipping center. No data to process.');
         return;
     }
 
-    var client = await connect();
-    var dataHoje = getDateHoje()
-
-    data.forEach(element => {
-        // convertemos as datas para o formato MM/DD/YY
+    var dataHoje = getDateHoje();
+    
+    data.forEach(async element => {
+        // convertemos as datas para o formato MM/DD/YY        
         if (element.acf.evento_inicio == null) {
             console.log('1 record not inserted! Reason: no start date.');
             return;
         }
-        var data_ini = convertDate(element.acf.evento_inicio)
-        var local = element.acf.evento_local
         
-        if (compareDate(data_ini, dataHoje) && checkLocal(local))
+        var client = await connect();
+
+        var data_ini = convertDate(element.acf.evento_inicio);
+        var local = element.acf.evento_local;
+
+        var table = "temp";
+        
+        //if (compareDate(data_ini, dataHoje) && checkLocal(local))
+        if(true)
         {
-            var data_fim = convertDate(element.acf.evento_termino) 
-            var query = "INSERT INTO temp (id, data_inicio, data_termino, local, centro, nome, link)" +
-            "VALUES ('" + element.id + "', '" + data_ini + "', '" + data_fim + "', '" + local + "', '" 
-            + getCentro(local) + "', '" + element.acf.evento_nome + "', '" + element.link + "')";
+            var data_fim = convertDate(element.acf.evento_termino);
+            var query = `INSERT INTO ${table} (id, data_inicio, data_termino, local, centro, nome, link)
+                        VALUES (${element.id}, ${data_ini}, ${data_fim}, ${local}, ${centro}, ${element.acf.evento_nome}, ${element.link})`;
             
             client.query(query, function(err, result) {
                 if(err) {
@@ -131,31 +70,28 @@ async function saveData(data){
                 } else {
                     console.log("1 record inserted");
                 }
-            })
+                client.release();
+            });
             
-        } else {
-            console.log('1 record NOT inserted! Reason: Too old or not in campus.')
+        } 
+        else {
+            console.log('1 record NOT inserted! Reason: Past event');
+            console.log(`data do evento: ${data_ini}`);
         }
     });
-    client.release(); 
-
 }
     
 async function main() {
-    urls = [
-        process.env.CT_URL, process.env.CCNE_URL, 
-        process.env.CCSH_URL, process.env.CE_URL, 
-        process.env.CCR_URL, process.env.CAL_URL,
-        process.env.CCS_URL, process.env.CEFD_URL,
-        process.env.CTISM_URL, process.env.POLI_URL,
-        process.env.IPE_URL, process.env.CC_URL
-    ];
+    let urls = fs.readFileSync('./src/urls.json', 'UTF-8');
+    urls = JSON.parse(urls);
 
-    urls.forEach(url => {
-        fetch(url)
+    //let qtd = 20;
+    
+    urls.centros.forEach(centro => {
+        fetch(centro.url + "?per_page=20")
           .then(response => response.json())
-          .then(data => saveData(data))
+          .then(data => saveData(data, centro.centro))
     });
 }
 
-main()
+main();

@@ -1,14 +1,20 @@
 version: '3'
 
 services:
-  ufsmgo:
-    image: mrtrevisan/ufsmgo:latest
-    container_name: ufsmgo
+  ufsmgo-sync:
+    #image: mrtrevisan/ufsmgo-sync:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ufsmgo-sync
     restart: always
-    stdin_open: true
-    tty: true 
+    env_file: .env      
+
     networks:
       - traefik-proxy
+    labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-proxy"
 
 networks:
   traefik-proxy:

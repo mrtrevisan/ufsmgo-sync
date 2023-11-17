@@ -1,0 +1,23 @@
+{
+    "centros" : [
+        {"centro" : "CT", "url" : "https://www.ufsm.br/unidades-universitarias/CT/wp-json/wp/v2/eventos" },
+        {"centro" : "CCNE", "url" : "https://www.ufsm.br/unidades-universitarias/CCNE/wp-json/wp/v2/eventos"},
+        {"centro" : "CCSH", "url" : "https://www.ufsm.br/unidades-universitarias/CCSH/wp-json/wp/v2/eventos"},
+        {"centro" : "CE", "url" : "https://www.ufsm.br/unidades-universitarias/ce/wp-json/wp/v2/eventos"},
+        {"centro" : "CCR", "url" : "https://www.ufsm.br/unidades-universitarias/ccr/wp-json/wp/v2/eventos"},
+        {"centro" : "CAL", "url" : "https://www.ufsm.br/unidades-universitarias/cal/wp-json/wp/v2/eventos"},
+        {"centro" : "CCS", "url" : "https://www.ufsm.br/unidades-universitarias/ccs/wp-json/wp/v2/eventos"},
+        {"centro" : "CEFD", "url" : "https://www.ufsm.br/unidades-universitarias/cefd/wp-json/wp/v2/eventos"},
+        {"centro" : "CTISM", "url" : "https://www.ufsm.br/unidades-universitarias/ctism/wp-json/wp/v2/eventos"},
+        {"centro" : "POLI", "url" : "https://www.ufsm.br/unidades-universitarias/politecnico/wp-json/wp/v2/eventos"},
+        {"centro" : "IPE", "url" : "https://www.ufsm.br/unidades-universitarias/ipeamarelo/wp-json/wp/v2/eventos"}, 
+        {"centro" : "CC", "url" : "https://www.ufsm.br/outros-orgaos/cc/wp-json/wp/v2/eventos"},
+        {"centro" : "PRAE", "url" : "https://www.ufsm.br/pro-reitorias/prae/wp-json/wp/v2/eventos"},
+        {"centro" : "PRE", "url" : "https://www.ufsm.br/pro-reitorias/pre/wp-json/wp/v2/eventos"},
+        {"centro" : "PROGREP", "url" : "https://www.ufsm.br/pro-reitorias/progep/wp-json/wp/v2/eventos"},
+        {"centro" : "PROGRAD", "url" : "https://www.ufsm.br/pro-reitorias/prograd/wp-json/wp/v2/eventos"},
+        {"centro" : "PROINOVA", "url" : "https://www.ufsm.br/pro-reitorias/proinova/wp-json/wp/v2/eventos"},
+        {"centro" : "PROPLAN", "url" : "https://www.ufsm.br/pro-reitorias/proplan/wp-json/wp/v2/eventos"},
+        {"centro" : "PRPGP", "url" : "https://www.ufsm.br/pro-reitorias/prpgp/wp-json/wp/v2/eventos"}
+    ]
+}
