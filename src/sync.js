@@ -6,6 +6,7 @@ const UniqueViolationErr = "23505";
 var insertedRec = 0;
 var skippedRec = 0;
 
+/*
 function checkLocal(local){
     if      (local.match(/online/i))        return false;
     else if (local.match(/youtube/i))       return false;
@@ -17,6 +18,7 @@ function checkLocal(local){
     else if (local.match(/Itaimbé/i))       return false;
     else return true;
 }
+*/
 
 async function saveData(data, centro){
     if ( (data == null) || (data == undefined) ) {
@@ -25,8 +27,6 @@ async function saveData(data, centro){
     }
 
     var dataHoje = getDateHoje();
-    var insertedRec = 0;
-    var skippedRec = 0;
     
     data.forEach(async element => {
         // convertemos as datas para o formato MM/DD/YY        
@@ -80,9 +80,7 @@ async function processUrls(urls){
             fetch(centro.url + "?per_page=20")
             .then(response => response.json())
             .then(data => saveData(data, centro.centro))
-            
         })
-        //console.log(`Inserted ${insertedRec} records; \nSkipped ${skippedRec} records;`);
     }
     catch (err) {
         console.error("Error on URL processing: " + err);
@@ -94,5 +92,9 @@ async function main() {
     urls = JSON.parse(urls);
     await processUrls(urls)
 }
-
 main();
+
+process.on('exit', () => {
+    console.log(`Fim da execução em ${getDateHoje()}`);
+    console.log(`Inseridos ${insertedRec} registros;\nIgnorados ${skippedRec} registros;`);
+});
