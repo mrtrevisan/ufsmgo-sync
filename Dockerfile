@@ -7,20 +7,12 @@ COPY yarn.lock ./
 RUN yarn
 
 FROM node:18-alpine
+# Copy from installer
 WORKDIR /app
-RUN apk update && apk add --no-cache \
-        python3 \
-        py3-pip \
-        less groff \
-        jq \
-    && pip3 install --upgrade pip \
-    && pip3 install --no-cache-dir \
-        awscli \
-    && rm -rf /var/cache/apk/*
-
 COPY --chown=node:node --from=installer /app/node_modules ./node_modules
-# Bundle app source
+# app source
 COPY --chown=node:node . .
+# start script
 RUN chmod -R 755 /app/script \
     && chown node:node /app
 USER node

@@ -2,6 +2,7 @@ node_modules
 npm-debug.log
 Dockerfile
 docker-compose.yml
+.dockerignore
 variables.env
 azure-pipelines.yml
 README.md
